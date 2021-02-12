@@ -1,0 +1,91 @@
+{% extends "detail_layout.html" %}
+
+
+
+{% block content %}
+
+
+{% if post.progress == 100 %}
+
+<div class="media-body">
+<h6>Advertisement has expired </h6>
+</div>
+{% else %}
+<div class="media-body">
+<h6><strong>{{post.progress}}%</strong> of the advertisement duration is over. </h6>
+</div>
+
+{% endif %}
+<div class="progress">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{post.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{post.progress}}%">{{post.progress}}%</div>
+</div>
+<hr>
+<div class="jumbotron">
+  <h1 class="display-4">{{post.title}}</h1>
+
+  <hr class="my-4">
+  <p class="lead"> {{post.description}}</p>
+
+    <div class="media-body">
+                  <small class="text-muted mr-2" >Posted&nbsp;&nbsp;&nbsp;: </small>
+                  <small class="text-primary ml-auto" >{{ post.date_posted }}</small>
+    </div>
+    <div class="media-body">
+                  <small class="text-muted mr-2" >Deadline: </small>
+                  <small class="text-danger ml-auto" >{{ post.deadline }}</small>
+    </div>
+    <div class="media-body">
+         <hr>
+              <form action="/{{ key }}" name="keywords" method="post">
+                        {% for key in post["keywords"] %}
+                            {% if key == filter_keyword %}
+                                <a href="/{{key}}" class="badge badge-danger badge-pill">{{ key }}</a>
+                            {% else %}
+                                <a href="/{{key}}" class="badge badge-primary badge-pill">{{ key }}</a>
+                            {% endif %}
+
+                        {% endfor %}
+              </form>
+    {% if current_user.is_authenticated %}
+        {% if current_user.username == post.username %}
+            {% if post.accepted_students|length > 0 %}
+                <hr>
+                <h3>Accepted Students</h3>
+
+               <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>University</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for student in post.accepted_students %}
+                      <tr>
+                        <td><a type="button" class="btn" href="/student/{{ student.username }}">{{ student.student_details.name_surname }}</a></td>
+                        <td>{{ student.student_details.university }}</td>
+                        <td><a href="mailto:{{ student.email }}">Contact</a></td>
+                      </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+

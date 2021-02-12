@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Enter Advertisement</h1>
+
+    <div class="card z-depth-3">
+
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('create_advertisement') }}" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Advertisement</legend>
+
+                    <div class="form-group">
+                        {{ form.title.label(class="form-control-label") }}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label(class="form-control-label") }}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.deadline.label(class="form-control-label") }}
+                        {{ form.deadline(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.keywords.label(class="form-control-label") }}
+                        {{ form.keywords(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock content %}

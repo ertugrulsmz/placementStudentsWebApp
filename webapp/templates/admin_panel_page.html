@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Admin Panel Page</h1>
+    <h2>Job Advertisements</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Company</th>
+                <th scope="col">Title</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for post in posts %}
+            <tr>
+                <th scope="row">{{ post.id }}</th>
+                <td>{{ post.company }}</td>
+                <td><a href="/{{post.id}}/detail"> {{ post.title }} </a></td>
+                <td>{{ post.deadline }}</td>
+                <td><a href="/delete_job_adv/{{ post.id }}" class="btn btn-outline-danger">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h2>User Profiles</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                {% if user.type %}
+                    <td><a href="/student/{{user.username}}"> {{ user.username }} </a></td>
+                    <td>{{ user.email }}</td>
+                    <td>Student</td>
+                {% else %}
+                    <td><a href="company/{{user.username}}"> {{ user.username }} </a></td>
+                    <td>{{ user.email }}</td>
+                    <td>Company</td>
+                {% endif %}
+
+                <td><a href="/delete_user/{{ user.id }}" class="btn btn-outline-danger">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

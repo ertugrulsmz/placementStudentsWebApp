@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='account2.css') }}">
+
+    {% if title %}
+        <title>Flask Blog - {{ title }}</title>
+    {% else %}
+        <title>Flask Blog</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
+
+        <div class="container">
+            <a class="navbar-brand mr-4" href="/"><i>Place Yourself</i></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+
+              <div class="input-group form-sm form-2 pl-0" style="max-width: 300px">
+                  {% if  request.args.get('name')  %}
+                    <input id="accountsearchinput" class="form-control red-border" value="{{ request.args.get('name') }}" type="text" placeholder="Search" aria-label="Search">
+                  {% else %}
+                    <input id="accountsearchinput" class="form-control red-border" type="text" placeholder="Search" aria-label="Search">
+                  {% endif %}
+                  <div class="input-group-append" id="accountsearchbutton">
+                    <span class="input-group-text red lighten-3" id="basic-text1" ><i class="fas fa-search text-grey"
+                        aria-hidden="true"></i></span>
+                  </div>
+
+              </div>
+          </div>
+                    <!-- Navbar Right Side -->
+
+              <div class="navbar-nav">
+
+
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+
+
+              <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                    {% if current_user.is_authenticated %}
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0"
+                            alt="avatar image" height="18px" width="20px">
+                    {% else %}
+
+                        <svg width="1.5em" height="1em" viewBox="0 0 16 16" class="bi bi-journal-medical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                          <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+
+                    {% endif %}
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                  aria-labelledby="navbarDropdownMenuLink-333">
+                   {% if current_user.is_authenticated %}
+                       {% if current_user.username == "admin" %}
+                           <a class="dropdown-item" href="{{ url_for('admin_panel') }}">Admin Panel</a>
+                       {% else %}
+                           <a class="dropdown-item" href="{{ url_for('account') }}">Account</a>
+                       {% endif %}
+                    <a  class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+                    <a class="dropdown-item" href="{{ url_for('register') }}">Register</a>
+                    {% endif %}
+                </div>
+              </div>
+
+
+            </div>
+
+
+          </div>
+        </div>
+      </nav>
+    </header>
+
+
+
+
+
+
+
+
+
+    <div>
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#searchgrid2").hide();
+
+            $( "#accountsearchbutton" ).click(function() {
+                var searchinput = $('#accountsearchinput').val();
+                console.log("result : "+searchinput)
+                var url = "https://www.youtube.com/watch?v=JwMKRevYa_M";
+
+                if (searchinput != null ){
+                    console.log('not none')
+                }
+
+                window.location.href = "{{ url_for('search', name='ADDSHARE2') }}".replace("ADDSHARE2", searchinput);
+                //onclick="window.location='{{ url_for('home') }}'"
+            });
+
+
+
+            $("#company_search_head").click(function(){
+                console.log("company click")
+               $("#searchgrid1").hide();
+                $("#searchgrid2").show();
+            });
+
+             $("#student_search_head").click(function(){
+                console.log("company click")
+               $("#searchgrid2").hide();
+                $("#searchgrid1").show();
+
+            });
+
+            console.log("fawfawf");
+
+        });
+    </script>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

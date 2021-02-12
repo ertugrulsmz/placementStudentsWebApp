@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+
+
+{% block content %}
+
+<form  class="form-group" method="post">
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+    <select class="form-control"  name="selection" id="exampleFormControlSelect1">
+      <option value="company">By company</option>
+      <option value="title">By title</option>
+      <option value="keyword">By keyword</option>s
+    </select>
+</div>
+
+  <input type="text" class="form-control rounded" name="search_area" placeholder="Search..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+     <button type="submit" class="btn btn-primary btn-sm">Search</button>
+  </div>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {%for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="/company/{{ post.username }}">{{ post.company }}</a>
+              <small class="text-muted position-relative start-100"> {{ post.date_posted }}</small>
+
+            </div>
+            <h2><a class="article-title" href="/{{post.id}}/detail">{{ post.title }}</a></h2>
+              {% if post.description|length <= 300 %}
+            <p class="article-content">{{ post.description }}</p>
+              {% else %}
+              <p class="article-content">{{ post.description[:300] }}...<a href="/{{post.id}}/detail"> See details</a></p>
+              {% endif %}
+              <div class="media-body">
+                  <small class="text-muted mr-2" >Deadline: </small>
+                  <small class="text-danger ml-auto" >{{ post.deadline }}</small>
+              </div>
+
+              <div class="media-body">
+              <form action="/{{ key }}" name="keywords" method="post">
+                        {% for key in post["keywords"] %}
+                            {% if key == filter_keyword %}
+                                <a href="/{{key}}" class="badge badge-danger badge-pill">{{ key }}</a>
+                            {% else %}
+                                <a href="/{{key}}" class="badge badge-primary badge-pill">{{ key }}</a>
+                            {% endif %}
+
+                        {% endfor %}
+              </form>
+              </div>
+          </div>
+        </article>
+
+    {% endfor %}
+{% endblock content %}

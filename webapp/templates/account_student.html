@@ -1,0 +1,327 @@
+{% extends "layout_account2.html" %}
+{% block content %}
+
+<div class="container" id="containerid">
+    <div class="row">
+        <div class="col-lg-4">
+           <div class="profile-card-4 z-depth-3" >
+            <div class="card">
+              <div class="card-body text-center bg-info rounded">
+               <div class="user-box" style="height: 142px">
+                {% if img_data %}
+                    <img src="data:image/jpeg;base64,{{ img_data }}" alt="img_data"  id="imgslot" height="140px;" width="140px;" />
+                {% else %}
+                    <img src="../static/images/avatar-icon.png" alt="img_data"  id="imgslot"/>
+                {% endif %}
+              </div>
+              <h5 class="mb-1 text-white">{{ user.student_details.name_surname }}</h5>
+              <h6 class="text-light">/{{ user.username }}</h6>
+             </div>
+              <div class="card-body" id="company_card_body">
+
+              <ul class="list-group shadow-none">
+                  {% if user.student_details.university %}
+                  <li  class="list-group-item">
+                      <div class="list-icon">
+                            <i class="fa fa-university" ></i>
+                      </div>
+                      <div class="list-details">
+
+                            <span>{{ user.student_details.university }}</span>
+                            <span>- {{ user.student_details.class_level }}</span>
+                            <small>University - Year</small>
+
+                      </div>
+                  </li>
+                  {% endif %}
+
+                  {% if user.student_details.gpa %}
+                  <li  class="list-group-item">
+                      <div class="list-icon">
+                            <i class="fa fa-graduation-cap" ></i>
+                      </div>
+                      <div class="list-details">
+
+                            <span>{{ user.student_details.gpa }} / 4.0</span>
+                            <small>GPA</small>
+
+                      </div>
+                  </li>
+                  {% endif %}
+
+                {% if user.student_details.linkedin %}
+                <li class="list-group-item">
+                  <div class="list-icon">
+                      {% if user.student_details.linkedin %}
+                        <i class="fab fa-linkedin" onclick="window.open('http://www.linkedin.com/in/{{ user.student_details.linkedin }}')"></i>
+                      {% endif %}
+                  </div>
+                  <div class="list-details" >
+                    <span>{{ user.student_details.linkedin }}</span>
+                    <small>Linkedin Account Name</small>
+                  </div>
+                </li>
+                {% endif %}
+
+                {% if user.student_details.github %}
+                <li class="list-group-item">
+                  <div class="list-icon">
+                    <i class="fab fa-github"  onclick="window.open('http://www.github.com/{{ user.student_details.github }}')"></i>
+                  </div>
+                  <div class="list-details">
+                    <span>{{ user.student_details.github }}</span>
+                    <small>Github</small>
+                  </div>
+                </li>
+                {% endif %}
+
+
+              </ul>
+
+               </div>
+
+             </div>
+
+           </div>
+        </div>
+         <div class="col-lg-8">
+          <div class="card z-depth-3" style="min-height: 635px">
+          <div class="card-body">
+          <ul class="nav nav-pills">
+
+
+                {% if formerror %}
+                    <li class="nav-item">
+                        <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link"><i class="icon-user"></i> <span class="hidden-xs">Profile</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active show"><i class="icon-user"></i> <span class="hidden-xs">Profile</span></a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a href="javascript:void();" data-target="#messages" data-toggle="pill" class="nav-link"><i class="icon-envelope-open"></i>
+                        <span class="hidden-xs">
+                            Job Offers
+                            {% if current_user.username == user.username %}
+                                {% if user.advertisements|length > 0 %}
+                                    <span class="badge bg-danger">{{ user.advertisements|length }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </span></a>
+                </li>
+
+                {% if current_user.username == user.username %}
+                    {% if formerror %}
+                        <li class="nav-item">
+                            <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active show"><i class="icon-note"></i> <span class="hidden-xs">Edit</span></a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link"><i class="icon-note"></i> <span class="hidden-xs">Edit</span></a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+              <div class="tab-content p-3">
+                {% if formerror %}
+                   <div class="tab-pane" id="profile">
+                {% else %}
+                    <div class="tab-pane active show" id="profile">
+                {% endif %}
+
+
+               <div class="row">
+                        <div class="col-md-6">
+                            <div class="aboutcompany">
+                                <h5>About</h5>
+                                 <p class="aboutcompany_p">
+                                     {%  if user.student_details.description is none %}
+                                     {{user.student_details.name_surname}} is authentic and earnest in explaining his motivations and skills as a software engineer
+                                     {% else %}
+                                     {{user.student_details.description}}
+                                     {% endif %}
+                                 </p>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <!-- Material input -->
+                        </div>
+                        <div class="col-md-12" style="height:200px">
+                             <h5>Business Keywords</h5>
+                            {%  if business_keywords is not none %}
+                            {% for k in business_keywords %}
+                                <a href="javascript:void();" class="badge badge-dark badge-pill">{{ k }}</a>
+                            {%  endfor %}
+                            {% endif %}
+
+                            <hr>
+                        </div>
+                </div>
+                    <!--/row-->
+                </div>
+                <div class="tab-pane" id="messages">
+                <!--
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert-icon">
+                     <i class="icon-info"></i>
+                    </div>
+                    <div class="alert-message">
+                      <span><strong>Ads : </strong>You can see all advertisements belong to {{ user.company_details.name }}</span>
+                    </div>
+                  </div>
+                  -->
+
+                    <h4>Job Lists</h4>
+                            {% for ad in user.advertisements %}
+                            <div class="card border" >
+                              <div class="card-body">
+                                <h5 class="card-title">{{ ad.title }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> <span class="float-right font-weight-bold">{{ ad.date_posted.strftime("%B %d, %Y") }}</span> Company</h6>
+                                <p class="card-text">{{ ad.description }}</p>
+                                <a href="../{{ ad.id }}/detail">View Job</a><hr>
+
+
+                                  {% if current_user.username == user.username %}
+                                  <form action="../response/{{ ad.id }}" method="post">
+                                    <input type="submit" class="btn btn-success" name="res" value="Accept" />
+                                    <input type="submit" class="btn btn-danger" name="res" value="Reject" />
+                                </form>
+                                  {% endif %}
+
+                              </div>
+                            </div>
+                            {% endfor %}
+
+                            {% for resp in user.responses %}
+                            <div class="card border" >
+                              <div class="card-body">
+                                <h5 class="card-title">{{ resp.advertisement.title }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> <span class="float-right font-weight-bold">{{ resp.advertisement.date_posted.strftime("%B %d, %Y") }}</span> Company</h6>
+                                <p class="card-text">{{ resp.advertisement.description }}</p>
+                                <a href="../{{ resp.advertisement.id }}/detail">View Job</a><hr>
+
+                                    {% if resp.answer == 1 %}
+                                        <h6 class="btn btn-success"> Accepted </h6>
+                                    {% else %}
+                                        <h6 class="btn btn-danger"> Rejected </h6>
+                                    {% endif %}
+
+
+                              </div>
+                            </div>
+                            {% endfor %}
+
+
+                </div>
+
+                {% if current_user.username == user.username %}
+                     {% if formerror %}
+                        <div class="tab-pane active show" id="edit">
+                    {% else %}
+                         <div class="tab-pane" id="edit">
+                    {% endif %}
+
+                         <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+
+                            <legend class="border-bottom mb-4">Edit Student Profile</legend>
+
+                            <div class="form-group">
+                                {{ form.username.label(class="form-control-label") }}
+                                {{ form.username(class="form-control form-control-lg", value=user.username) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.email.label(class="form-control-label") }}
+                                {{ form.email(class="form-control form-control-lg", value=user.email) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.name_surname.label(class="form-control-label") }}
+                                {{ form.name_surname(class="form-control form-control-lg" , value=user.student_details.name_surname) }}
+                            </div>
+
+                             <div class="form-group">
+                                {{ form.description.label(class="form-control-label") }}
+                                {{ form.description(class="form-control form-control-lg" , value=user.student_details.description) }}
+                            </div>
+
+                             <div class="form-group">
+                                {{ form.keywords.label(class="form-control-label") }}
+                                {{ form.keywords(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.password.label(class="form-control-label") }}
+                                {{ form.password(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.confirm_password.label(class="form-control-label") }}
+                                {{ form.confirm_password(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.university.label(class="form-control-label") }}
+                                {{ form.university(class="form-control form-control-lg", value=user.student_details.university) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.class_level.label(class="form-control-label") }}
+                                {{ form.class_level(class="form-control form-control-lg", value=user.student_details.class_level) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.gpa.label(class="form-control-label") }}
+                                {{ form.gpa(class="form-control form-control-lg", value=user.student_details.gpa) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.active.label(class="form-control-label") }}
+                                {{ form.active(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.github.label(class="form-control-label") }}
+                                {{ form.github(class="form-control form-control-lg" , value=user.student_details.github) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.linkedin.label(class="form-control-label") }}
+                                {{ form.linkedin(class="form-control form-control-lg", value=user.student_details.linkedin) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.image.label(class="form-control-label") }}
+                                {{ form.image(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+
+                         </div>
+                {% endif %}
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+</div>
+
+
+{% endblock content %}

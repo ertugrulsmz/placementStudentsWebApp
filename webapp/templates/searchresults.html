@@ -1,0 +1,165 @@
+{% extends "layout_account2.html" %}
+{% block content %}
+
+    <div class="container">
+<div class="main-body">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Search Results for : "{{ request.args.get('name') }}" </a></li>
+
+        </ol>
+      </nav>
+      <!-- /Breadcrumb -->
+
+        <div class="mb-4">
+
+            <ul class="nav nav-pills nav-pills-primary nav-justified">
+                <li class="nav-item">
+                    <a href="javascript:void();" id="student_search_head"  data-toggle="pill" class="nav-link active show"><i class="icon-user"></i> <span class="hidden-xs">Student</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void();" id="company_search_head"  data-toggle="pill" class="nav-link"><i class="icon-envelope-open"></i> <span class="hidden-xs">Company</span></a>
+                </li>
+
+            </ul>
+
+        </div>
+
+      <!--{% for u in students %}
+           s{{ u.username }}
+      {% endfor %}
+
+      {% for u in companies %}
+        c {{ u.username }}
+      {% endfor %} !-->
+
+       <div id="searchgrid1" class="row row-cols-6">
+
+          {% set count = namespace(value=0) %}
+          {% for s in students %}
+              {% if count.value == 6 %}
+                   {% set count.value = 0 %}
+                <div class="w-100"></div>
+                  <br>
+              {% endif %}
+              <div class="col">
+                  <div class="card" style="height:320px;max-height:320px">
+                    {% if s.student_details.img %}
+                        <img src="data:image/png;base64,{{s.student_details.img}}" alt="img_data" id="imgslot" height="120px;"
+                             width="120px;" class="center"/>
+                    {% else %}
+                        <img src="../static/images/avatar-icon.png" alt="img_data" height="120px" width="120px"  id="imgslot"/>
+                    {% endif %}
+                    <div class="card-body text-center">
+
+                      <h5 class="card-title">{{ s.username }}</h5>
+                      <p class="text-secondary mb-1">{{s.student_details.university}}</p>
+                      <p></p>
+                      <p style="position: absolute;bottom: 25px;left: 60px"
+                              class="text-muted font-size-sm">{{ s.student_details.gpa }} <br> <b>GPA</b> </p>
+                    </div>
+                    <div class="card-footer">
+                      <button class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"
+                              onclick="window.location.href='{{ url_for('account1',username = s.username) }}';">
+                        Profile</button>
+
+                    </div>
+                  </div>
+                </div>
+
+
+           {% set count.value = count.value + 1 %}
+
+          {% endfor %}
+
+
+          {% for x in range(6-count.value) %}
+            <div class="col">
+                  <div class="card">
+
+                  </div>
+            </div>
+          {% endfor %}
+
+
+
+
+
+      </div>
+
+
+      <div id="searchgrid2" class="row row-cols-6">
+
+          {% set count = namespace(value=0) %}
+          {% for c in companies %}
+
+               {% if count.value == 6 %}
+                   {% set count.value = 0 %}
+                <div class="w-100"></div>
+              {% endif %}
+
+
+              <div class="col mb-3">
+                  <div class="card" style="height:320px;max-height:320px">
+                    {% if c.company_details.img %}
+                        <img src="data:image/png;base64,{{c.company_details.img}}" alt="img_data" id="imgslot" height="120px;"
+                             width="120px;" class="center"/>
+                    {% else %}
+                        <img src="../static/images/avatar-icon.png" alt="img_data" height="120px" width="120px"  id="imgslot"/>
+                    {% endif %}
+                    <div class="card-body text-center">
+
+                      <h5 class="card-title">{{ c.username }}</h5>
+                      <p class="text-secondary mb-1">{{ c.company_details.address }}</p>
+                      <p></p>
+                      <p style="position: absolute;bottom: 25px;left: 50px"
+                              class="text-muted font-size-sm">{{ c.company_details.numberofworkers }} <br> <b>Workers</b></p>
+                    </div>
+                    <div class="card-footer">
+                      <button class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"
+                              onclick="window.location.href='{{ url_for('account2',username = c.username) }}';">
+                        Profile</button>
+
+                    </div>
+                  </div>
+                </div>
+
+
+           {% set count.value = count.value + 1 %}
+
+          {% endfor %}
+
+
+          {% for x in range(6-count.value) %}
+            <div class="col">
+                  <div class="card">
+
+                  </div>
+            </div>
+          {% endfor %}
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+{% endblock content %}

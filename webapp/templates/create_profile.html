@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Chose your profile type</h1>
+
+    <div class="card z-depth-3">
+        <div class="card-body">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a href="javascript:void();" data-target="#student" data-toggle="pill" class="nav-link"><i class="icon-envelope-open"></i> <span class="hidden-xs">Student</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void();" data-target="#company" data-toggle="pill" class="nav-link"><i class="icon-envelope-open"></i> <span class="hidden-xs">Company</span></a>
+                </li>
+            </ul>
+
+            <div class="tab-content p-3">
+                <div class="tab-pane" id="student">
+                    <form method="POST" action="{{ url_for('create_profile_student') }}" enctype="multipart/form-data">
+                        {{ form_student.hidden_tag() }}
+                        <fieldset class="form-group">
+
+                            <legend class="border-bottom mb-4">Create Student Profile</legend>
+
+                            <div class="form-group">
+                                {{ form_student.name.label(class="form-control-label") }}
+                                {{ form_student.name(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.university.label(class="form-control-label") }}
+                                {{ form_student.university(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.class_level.label(class="form-control-label") }}
+                                {{ form_student.class_level(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.gpa.label(class="form-control-label") }}
+                                {{ form_student.gpa(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.description.label(class="form-control-label") }}
+                                {{ form_student.description(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.keywords.label(class="form-control-label") }}
+                                {{ form_student.keywords(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.active.label(class="form-control-label") }}
+                                {{ form_student.active(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.github.label(class="form-control-label") }}
+                                {{ form_student.github(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.linkedin.label(class="form-control-label") }}
+                                {{ form_student.linkedin(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.image.label(class="form-control-label") }}
+                                {{ form_student.image(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_student.submit(class="btn btn-outline-info") }}
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+
+                <div class="tab-pane" id="company">
+                    <form method="POST" action="{{ url_for('create_profile_company') }}" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+
+                            <legend class="border-bottom mb-4">Create Company Profile</legend>
+
+                            <div class="form-group">
+                                {{ form.name.label(class="form-control-label") }}
+                                {{ form.name(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.description.label(class="form-control-label") }}
+                                {{ form.description(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.sector.label(class="form-control-label") }}
+                                {{ form.sector(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.numberofworkers.label(class="form-control-label") }}
+                                {{ form.numberofworkers(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.website.label(class="form-control-label") }}
+                                {{ form.website(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.github.label(class="form-control-label") }}
+                                {{ form.github(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.linkedin.label(class="form-control-label") }}
+                                {{ form.linkedin(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.address.label(class="form-control-label") }}
+                                {{ form.address(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.image.label(class="form-control-label") }}
+                                {{ form.image(class="form-control form-control-lg") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+{% endblock content %}
